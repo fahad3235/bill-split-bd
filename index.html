@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bill Split BD — বিল ভাগ</title>
+<meta name="description" content="Bill Split BD — a free, fully offline bilingual (Bangla/English) group bill splitter for Bangladesh.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="app-header">
+  <div>
+    <h1 data-i18n="appTitle">Bill Split BD</h1>
+    <p class="tagline" data-i18n="tagline">Split restaurant bills fairly — in English or বাংলা।</p>
+  </div>
+  <button id="langToggle" class="lang-btn" data-testid="lang-toggle">বাংলা</button>
+</header>
+
+<main>
+  <!-- BILL -->
+  <section class="card" id="billCard">
+    <h2 data-i18n="billTitle">Bill</h2>
+    <div class="field">
+      <label for="billInput" data-i18n="billAmount">Bill amount (৳)</label>
+      <input type="number" id="billInput" data-testid="bill-input" min="0" step="0.01"
+             placeholder="0.00" inputmode="decimal">
+    </div>
+    <div class="charges">
+      <div class="charge-row">
+        <label class="check">
+          <input type="checkbox" id="svcOn" data-testid="svc-on" checked>
+          <span data-i18n="serviceCharge">Service charge</span>
+        </label>
+        <span class="pct"><input type="number" id="svcPct" data-testid="svc-pct" value="10"
+              min="0" max="100" step="0.5" inputmode="decimal"> %</span>
+      </div>
+      <div class="charge-row">
+        <label class="check">
+          <input type="checkbox" id="vatOn" data-testid="vat-on" checked>
+          <span data-i18n="vat">VAT</span>
+        </label>
+        <span class="pct"><input type="number" id="vatPct" data-testid="vat-pct" value="15"
+              min="0" max="100" step="0.5" inputmode="decimal"> %</span>
+      </div>
+    </div>
+    <div class="totals" id="billTotals" data-testid="bill-totals">
+      <div class="trow"><span data-i18n="subtotal">Subtotal</span><b id="tSubtotal" data-testid="t-subtotal">৳0.00</b></div>
+      <div class="trow" id="rowSvc"><span><span data-i18n="serviceCharge">Service charge</span> (<span id="tSvcPct">10</span>%)</span><b id="tService" data-testid="t-service">৳0.00</b></div>
+      <div class="trow" id="rowVat"><span><span data-i18n="vat">VAT</span> (<span id="tVatPct">15</span>%)</span><b id="tVat" data-testid="t-vat">৳0.00</b></div>
+      <div class="trow grand"><span data-i18n="grandTotal">Grand total</span><b id="tGrand" data-testid="t-grand">৳0.00</b></div>
+    </div>
+  </section>
+
+  <!-- PEOPLE -->
+  <section class="card" id="peopleCard">
+    <h2 data-i18n="peopleTitle">People</h2>
+    <form id="addPersonForm" class="add-row">
+      <input type="text" id="nameInput" data-testid="name-input" maxlength="30"
+             placeholder="Name" data-i18n-ph="namePlaceholder">
+      <button type="submit" id="addBtn" data-testid="add-btn" data-i18n="addPerson">Add person</button>
+    </form>
+    <div id="peopleList" data-testid="people-list"></div>
+    <div id="remainingBox" class="remaining" data-testid="remaining-box">
+      <span data-i18n="remainingOfSubtotal">Remaining of subtotal</span>:
+      <b id="remainingVal" data-testid="remaining-val">৳0.00</b>
+    </div>
+    <div id="errorBox" class="error" data-testid="error-box" hidden></div>
+  </section>
+
+  <!-- ROUNDING -->
+  <section class="card" id="roundCard">
+    <h2 data-i18n="roundingTitle">Rounding</h2>
+    <div class="radio-group" role="radiogroup">
+      <label><input type="radio" name="rounding" value="exact" checked data-testid="round-exact">
+        <span data-i18n="roundExact">Exact (to the paisa)</span></label>
+      <label><input type="radio" name="rounding" value="10" data-testid="round-10">
+        <span data-i18n="round10">Nearest ৳10</span></label>
+      <label><input type="radio" name="rounding" value="50" data-testid="round-50">
+        <span data-i18n="round50">Nearest ৳50</span></label>
+    </div>
+    <p class="hint" id="roundDiff" data-testid="round-diff" data-i18n="roundDiffNone">No rounding difference.</p>
+  </section>
+
+  <!-- RESULT -->
+  <section class="card" id="resultCard">
+    <h2 data-i18n="resultTitle">Split</h2>
+    <div id="emptyState" class="empty" data-testid="empty-state">
+      <p data-i18n="emptyState">Enter a bill amount and add at least one person to see the split.</p>
+    </div>
+    <div id="resultList" data-testid="result-list" hidden></div>
+    <div id="resultSummary" class="totals" hidden>
+      <div class="trow"><span data-i18n="splitTotal">Split total</span><b id="rTotal" data-testid="r-total">৳0.00</b></div>
+      <div class="trow grand"><span data-i18n="grandTotal">Grand total</span><b id="rGrand" data-testid="r-grand">৳0.00</b></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p data-i18n="footerNote">Bill Split BD · 100% offline — your data never leaves this device.</p>
+</footer>
+
+<script src="js/i18n.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
